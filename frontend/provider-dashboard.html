@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provider Dashboard | FoodRescue Lite</title>
+  <meta name="description" content="A lightweight surplus-food coordination platform connecting providers with recipients to reduce food wastage.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.35rem;">
+            Food Provider Dashboard
+          </h1>
+          <p style="color: var(--text-muted);">Manage your surplus food listings and confirm pickup handovers.</p>
+        </div>
+        <a href="/create-food.html" class="btn btn-primary btn-lg">+ Post Surplus Food</a>
+      </div>
+
+      <!-- Provider Quick Stats -->
+      <div id="provider-stats" class="stats-grid">
+        <div class="loading-spinner"><div class="spinner"></div></div>
+      </div>
+
+      <!-- My Food Posts Section -->
+      <div style="margin-top: 2.5rem;">
+        <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.25rem;">My Food Posts</h2>
+
+        <div class="table-container">
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Food Item</th>
+                  <th>Quantity</th>
+                  <th>Pickup Location</th>
+                  <th>Pickup Deadline</th>
+                  <th>Status & Claimant</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="provider-foods-tbody">
+                <tr><td colspan="6" style="text-align:center; padding: 2rem;"><div class="spinner"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--text-main);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; color: var(--primary);">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>FoodRescue Lite</span>
+      </div>
+      <p class="footer-text">Lightweight Surplus Food Coordination Platform &copy; 2026. Reducing food waste together.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+
+  <script src="/js/provider.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', loadProviderDashboard);
+  </script>
+</body>
+</html>

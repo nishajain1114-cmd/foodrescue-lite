@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | FoodRescue Lite</title>
+  <meta name="description" content="A lightweight surplus-food coordination platform connecting providers with recipients to reduce food wastage.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div style="margin-bottom: 2rem;">
+        <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.35rem;">
+          Admin Control Center
+        </h1>
+        <p style="color: var(--text-muted);">Platform statistics, user accounts, food post moderation, and claim tracking.</p>
+      </div>
+
+      <!-- Platform Stats -->
+      <div id="admin-stats" class="stats-grid">
+        <div class="loading-spinner"><div class="spinner"></div></div>
+      </div>
+
+      <!-- Food Posts Moderation -->
+      <div style="margin-top: 3rem;">
+        <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem;">Surplus Food Posts (Moderation)</h2>
+        <div class="table-container">
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Food Name</th>
+                  <th>Provider</th>
+                  <th>Status</th>
+                  <th>Deadline</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-foods-tbody">
+                <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Platform Users -->
+      <div style="margin-top: 3rem;">
+        <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem;">Platform Users</h2>
+        <div class="table-container">
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Activity</th>
+                  <th>Joined Date</th>
+                </tr>
+              </thead>
+              <tbody id="admin-users-tbody">
+                <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Claims -->
+      <div style="margin-top: 3rem;">
+        <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem;">All Claims</h2>
+        <div class="table-container">
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Claim ID</th>
+                  <th>Food Item</th>
+                  <th>Provider</th>
+                  <th>Recipient</th>
+                  <th>Status</th>
+                  <th>Claimed At</th>
+                </tr>
+              </thead>
+              <tbody id="admin-claims-tbody">
+                <tr><td colspan="6" style="text-align: center;">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--text-main);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; color: var(--primary);">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>FoodRescue Lite</span>
+      </div>
+      <p class="footer-text">Lightweight Surplus Food Coordination Platform &copy; 2026. Reducing food waste together.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+
+  <script src="/js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', loadAdminDashboard);
+  </script>
+</body>
+</html>

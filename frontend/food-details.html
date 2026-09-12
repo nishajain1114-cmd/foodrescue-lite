@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Details | FoodRescue Lite</title>
+  <meta name="description" content="A lightweight surplus-food coordination platform connecting providers with recipients to reduce food wastage.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="main-content">
+    <div class="container" id="food-details-container">
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Loading food details...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Claim Confirmation Modal -->
+  <div id="claim-modal" class="modal-backdrop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Confirm Food Claim</h3>
+        <button class="modal-close" onclick="closeClaimModal()">&times;</button>
+      </div>
+      <div>
+        <p>Are you sure you want to claim this surplus food?</p>
+        <div id="modal-food-desc"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeClaimModal()">Cancel</button>
+        <button id="confirm-claim-btn" class="btn btn-primary" onclick="confirmClaim()">Confirm Claim</button>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--text-main);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; color: var(--primary);">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>FoodRescue Lite</span>
+      </div>
+      <p class="footer-text">Lightweight Surplus Food Coordination Platform &copy; 2026. Reducing food waste together.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+
+  <script src="/js/foods.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', loadFoodDetails);
+  </script>
+</body>
+</html>

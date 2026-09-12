@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In | FoodRescue Lite</title>
+  <meta name="description" content="A lightweight surplus-food coordination platform connecting providers with recipients to reduce food wastage.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="form-card">
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <h1 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.4rem;">Welcome Back</h1>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Log in to coordinate or claim surplus food</p>
+        </div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address</label>
+            <input type="email" id="login-email" class="form-control" placeholder="name@example.com" required autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password</label>
+            <input type="password" id="login-password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+
+          <button type="submit" id="login-submit-btn" class="btn btn-primary btn-block" style="margin-top: 1.5rem;">
+            Log In
+          </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+          Don't have an account? <a href="/register.html" style="font-weight: 600;">Register here</a>
+        </p>
+
+        <!-- Quick-Fill Demo Logins for Instant Interview / Demonstration -->
+        <div class="demo-accounts">
+          <strong style="color: var(--text-main);">Quick Demo Logins (Click to Autofill):</strong>
+          <div class="demo-btn-group">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="quickFill('provider@greenleaf.com', 'password123')">
+              🏢 Food Provider
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="quickFill('rahul@communitycare.org', 'password123')">
+              🤝 Recipient / Volunteer
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="quickFill('admin@foodrescue.org', 'password123')">
+              🛡️ Admin
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--text-main);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; color: var(--primary);">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>FoodRescue Lite</span>
+      </div>
+      <p class="footer-text">Lightweight Surplus Food Coordination Platform &copy; 2026. Reducing food waste together.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+
+  <script>
+    function quickFill(email, pwd) {
+      document.getElementById('login-email').value = email;
+      document.getElementById('login-password').value = pwd;
+    }
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('login-submit-btn');
+      btn.disabled = true;
+      btn.innerText = 'Logging in...';
+
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+
+      try {
+        const res = await apiRequest('/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password })
+        });
+
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+
+        showToast('Login successful!');
+
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect');
+
+        setTimeout(() => {
+          if (redirect) {
+            window.location.href = redirect;
+          } else if (res.data.user.role === 'PROVIDER') {
+            window.location.href = '/provider-dashboard.html';
+          } else if (res.data.user.role === 'ADMIN') {
+            window.location.href = '/admin-dashboard.html';
+          } else {
+            window.location.href = '/foods.html';
+          }
+        }, 800);
+
+      } catch (err) {
+        showToast(err.message, 'error');
+        btn.disabled = false;
+        btn.innerText = 'Log In';
+      }
+    });
+  </script>
+</body>
+</html>

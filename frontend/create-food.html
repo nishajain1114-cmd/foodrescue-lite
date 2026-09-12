@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Surplus Food | FoodRescue Lite</title>
+  <meta name="description" content="A lightweight surplus-food coordination platform connecting providers with recipients to reduce food wastage.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="form-card" style="max-width: 680px;">
+        <div style="margin-bottom: 1.5rem;">
+          <h1 id="form-title" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.35rem;">
+            Post Surplus Food
+          </h1>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Provide food details so recipients or volunteers can claim and rescue it before the deadline.
+          </p>
+        </div>
+
+        <form id="food-post-form">
+          <div class="form-group">
+            <label class="form-label" for="food_name">Food Name *</label>
+            <input type="text" id="food_name" class="form-control" placeholder="e.g. Vegetable Rice, Fresh Buns, Lunch Boxes" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="category">Category *</label>
+              <select id="category" class="form-control" required>
+                <option value="Meals">Meals</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="Beverages">Beverages</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="quantity">Quantity *</label>
+              <input type="number" id="quantity" class="form-control" min="1" value="10" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="unit">Unit *</label>
+              <input type="text" id="unit" class="form-control" placeholder="e.g. Meal Boxes, Portions, Packs, Kg" value="Meal Boxes" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="available_until">Available Until (Pickup Deadline) *</label>
+              <input type="datetime-local" id="available_until" class="form-control" required>
+              <div class="form-help">Posts automatically expire after this time.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="pickup_location">Pickup Location *</label>
+            <input type="text" id="pickup_location" class="form-control" placeholder="e.g. College Canteen Gate 2, Hostel Mess Dispatch" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="description">Description & Packaging</label>
+            <textarea id="description" class="form-control" placeholder="Describe the ingredients, food temperature, packaging containers, or pickup instructions..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="image_url">Image URL (Optional)</label>
+            <input type="url" id="image_url" class="form-control" placeholder="https://example.com/food-image.jpg">
+            <div class="form-help">Leave empty to use a clean category illustration automatically.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-checkbox">
+              <input type="checkbox" id="is_vegetarian" checked>
+              <span>🌱 This food is 100% Vegetarian</span>
+            </label>
+          </div>
+
+          <button type="submit" id="submit-btn" class="btn btn-primary btn-block btn-lg" style="margin-top: 1.5rem;">
+            Post Surplus Food
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--text-main);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; color: var(--primary);">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>FoodRescue Lite</span>
+      </div>
+      <p class="footer-text">Lightweight Surplus Food Coordination Platform &copy; 2026. Reducing food waste together.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+
+  <script src="/js/provider.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', initFoodForm);
+  </script>
+</body>
+</html>

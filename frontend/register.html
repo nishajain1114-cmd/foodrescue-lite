@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | FoodRescue Lite</title>
+  <meta name="description" content="A lightweight surplus-food coordination platform connecting providers with recipients to reduce food wastage.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="form-card">
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <h1 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.4rem;">Create an Account</h1>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Join FoodRescue Lite to share or claim surplus food</p>
+        </div>
+
+        <form id="register-form">
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name / Organization Name</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="e.g. Central Canteen or Alex Johnson" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="name@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="Minimum 6 characters" minlength="6" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-role">I want to register as:</label>
+            <select id="reg-role" class="form-control" required>
+              <option value="RECIPIENT">Recipient / Volunteer (Browse & claim food)</option>
+              <option value="PROVIDER">Food Provider (Canteen, Restaurant, Hostel, Cafeteria)</option>
+            </select>
+          </div>
+
+          <button type="submit" id="reg-submit-btn" class="btn btn-primary btn-block" style="margin-top: 1.5rem;">
+            Create Account
+          </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+          Already have an account? <a href="/login.html" style="font-weight: 600;">Log in</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--text-main);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; color: var(--primary);">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>FoodRescue Lite</span>
+      </div>
+      <p class="footer-text">Lightweight Surplus Food Coordination Platform &copy; 2026. Reducing food waste together.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+
+  <script>
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('reg-submit-btn');
+      btn.disabled = true;
+      btn.innerText = 'Creating account...';
+
+      const full_name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const role = document.getElementById('reg-role').value;
+
+      try {
+        const res = await apiRequest('/auth/register', {
+          method: 'POST',
+          body: JSON.stringify({ full_name, email, password, role })
+        });
+
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+
+        showToast('Registration successful! Welcome to FoodRescue Lite.');
+
+        setTimeout(() => {
+          if (role === 'PROVIDER') {
+            window.location.href = '/provider-dashboard.html';
+          } else {
+            window.location.href = '/foods.html';
+          }
+        }, 900);
+
+      } catch (err) {
+        showToast(err.message, 'error');
+        btn.disabled = false;
+        btn.innerText = 'Create Account';
+      }
+    });
+  </script>
+</body>
+</html>
