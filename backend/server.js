@@ -2,7 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
-require('dotenv').config();
+
+require('dotenv').config({
+  path: path.resolve(__dirname, '../.env')
+});
 
 const { testConnection } = require('./config/db');
 const { notFoundHandler, errorHandler } = require('./middleware/errorMiddleware');

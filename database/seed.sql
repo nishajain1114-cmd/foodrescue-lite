@@ -3,7 +3,7 @@
 -- Passwords for all sample users: password123
 -- ==========================================================
 
-USE foodrescue;
+USE defaultdb;
 
 -- Disable foreign key checks for clean truncation
 SET FOREIGN_KEY_CHECKS = 0;

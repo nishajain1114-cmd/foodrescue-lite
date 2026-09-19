@@ -3,8 +3,7 @@
 -- Database: MySQL
 -- ==========================================================
 
-CREATE DATABASE IF NOT EXISTS foodrescue;
-USE foodrescue;
+USE defaultdb;
 
 -- Drop in reverse dependency order for clean recreation
 DROP TABLE IF EXISTS pickup_records;
