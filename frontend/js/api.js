@@ -2,7 +2,7 @@
  * FoodRescue Lite - Centralized API Client
  */
 
-const API_BASE = '/api';
+const API_BASE = 'https://foodrescue-backend-8ez1.onrender.com/api';
 
 // Toast Notification System
 function showToast(message, type = 'success') {
